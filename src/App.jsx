@@ -6,6 +6,7 @@ import Toast from "./components/Toast";
 import Toolbar from "./components/Toolbar";
 import ProductGrid from "./components/ProductGrid";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -52,38 +53,46 @@ function App() {
   }, [toast]);
 
   return (
-    <div>
-      <Header title="My Shop" cart={cart} setIsCartOpen={setIsCartOpen} />
-      <div className="content">
-        <div className="products-section">
-          <Toolbar
-            search={search}
-            setSearch={setSearch}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-          />
-          <main>
-            <h2>Products</h2>
-            <ProductGrid
-              products={sortedProducts}
-              setCart={setCart}
-              setToast={setToast}
-            />
-          </main>
-        </div>
-        <div
-          className={`overlay ${isCartOpen ? "show" : ""}`}
-          onClick={() => setIsCartOpen(false)}
-        ></div>
-        <Cart
-          cart={cart}
-          setCart={setCart}
-          setIsCartOpen={setIsCartOpen}
-          isCartOpen={isCartOpen}
-        />
-        {toast && <Toast message={toast} />}
-      </div>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+
+          <div>
+            <Header title="My-Shop" cart={cart} setIsCartOpen={setIsCartOpen} />
+            <div className="content">
+              <div className="products-section">
+                <Toolbar
+                  search={search}
+                  setSearch={setSearch}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                />
+                <main>
+                  <h2>Products</h2>
+                  <ProductGrid
+                    products={sortedProducts}
+                    setCart={setCart}
+                    setToast={setToast}
+                  />
+                </main>
+              </div>
+              <div
+                className={`overlay ${isCartOpen ? "show" : ""}`}
+                onClick={() => setIsCartOpen(false)}
+              ></div>
+              <Cart
+                cart={cart}
+                setCart={setCart}
+                setIsCartOpen={setIsCartOpen}
+                isCartOpen={isCartOpen}
+              />
+              {toast && <Toast message={toast} />}
+            </div>
+          </div>
+        }
+      />
+    </Routes>
   );
 }
 
