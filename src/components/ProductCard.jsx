@@ -1,4 +1,5 @@
 import "./ProductCard.css";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product, setCart, setToast }) {
 
@@ -37,11 +38,15 @@ function ProductCard({ product, setCart, setToast }) {
 
     return (
         <div className="product-card">
-            <div className="product-image">
-                <img src={product.image} alt={product.name} />
-            </div>
+            <Link to={`/product/${product.id}`}>
+                <div className="product-image">
+                    <img src={product.image} alt={product.name} />
+                </div>
+            </Link>
             <div className="product-info">
-                <h3>{product.name}</h3>
+                <Link to={`/product/${product.id}`}>
+                    <h3>{product.name}</h3>
+                </Link>
                 <p>{product.price} $</p>
 
                 <button onClick={handleClick}>
