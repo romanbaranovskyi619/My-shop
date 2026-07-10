@@ -7,6 +7,7 @@ import Toolbar from "./components/Toolbar";
 import ProductGrid from "./components/ProductGrid";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -91,6 +92,10 @@ function App() {
             </div>
           </div>
         }
+      />
+      <Route
+        path="/product/:id"
+        element={<ProductPage />}
       />
     </Routes>
   );
