@@ -18,7 +18,7 @@ function ProductPage() {
             </div>
 
             <div className="product-info">
-                <Link to="/">
+                <Link to="/" className="back-link">
                     ← Back to Shop
                 </Link>
                 <h1>{product.name}</h1>
