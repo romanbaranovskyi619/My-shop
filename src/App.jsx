@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import useLocalStorage from "./hooks/useLocalStorage";
+
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const [cart, setCart] = useLocalStorage("cart", []);
 
   const [toast, setToast] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
 
   useEffect(() => {
     if (!toast) return;
@@ -26,6 +21,7 @@ function App() {
 
     return () => clearTimeout(timer);
   }, [toast]);
+
   return (
     <Routes>
       <Route
@@ -54,4 +50,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
