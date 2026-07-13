@@ -10,7 +10,7 @@ import products from "../data/products";
 
 import "../App.css";
 
-function HomePage() {
+function HomePage({ cart, setCart, toast, setToast }) {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [search, setSearch] = useState("");
 
@@ -21,7 +21,7 @@ function HomePage() {
     );
 
     const [sortBy, setSortBy] = useState("default");
-    const [toast, setToast] = useState("");
+
 
     const sortedProducts = [...filteredProducts];
 
@@ -40,15 +40,6 @@ function HomePage() {
     if (sortBy === "name-desc") {
         sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
     }
-
-    const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem("cart");
-        return savedCart ? JSON.parse(savedCart) : [];
-    });
-
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
 
     useEffect(() => {
         if (!toast) return;

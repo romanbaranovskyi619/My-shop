@@ -1,12 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 import products from "../data/products";
 import "./ProductPage.css";
+import { addToCart } from "../utils/cart";
 
-function ProductPage() {
+function ProductPage({ setCart, setToast }) {
     const { id } = useParams();
     const product = products.find(
         (item) => item.id === Number(id)
     );
+    function handleAddToCart() {
+        addToCart(product, setCart, setToast);
+    }
     return (
         <div className="product-page">
             <div className="product-image">
@@ -25,10 +29,10 @@ function ProductPage() {
 
                 <h2>{product.price} $</h2>
 
-                <button>Add to Cart</button>
+                <button onClick={handleAddToCart}>Add to Cart</button>
             </div>
         </div>
     );
 }
 
-export default ProductPage;
+export default ProductPage; 
