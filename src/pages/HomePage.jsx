@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 import Header from "../components/Header";
 import Cart from "../components/Cart";
@@ -13,43 +13,40 @@ import "../App.css";
 function HomePage({ cart, setCart, toast, setToast }) {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [search, setSearch] = useState("");
-
-    const searchText = search.toLowerCase();
-
-    const filteredProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(searchText)
-    );
-
     const [sortBy, setSortBy] = useState("default");
 
+    const sortedProducts = useMemo(() => {
+        const searchText = search.toLowerCase();
 
-    const sortedProducts = [...filteredProducts];
+        const filtered = products.filter((product) =>
+            product.name.toLowerCase().includes(searchText)
+        );
 
-    if (sortBy === "price-low") {
-        sortedProducts.sort((a, b) => a.price - b.price);
-    }
+        const sorted = [...filtered];
 
-    if (sortBy === "price-high") {
-        sortedProducts.sort((a, b) => b.price - a.price);
-    }
+        switch (sortBy) {
+            case "price-low":
+                sorted.sort((a, b) => a.price - b.price);
+                break;
 
-    if (sortBy === "name-asc") {
-        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-    }
+            case "price-high":
+                sorted.sort((a, b) => b.price - a.price);
+                break;
 
-    if (sortBy === "name-desc") {
-        sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
-    }
+            case "name-asc":
+                sorted.sort((a, b) => a.name.localeCompare(b.name));
+                break;
 
-    useEffect(() => {
-        if (!toast) return;
+            case "name-desc":
+                sorted.sort((a, b) => b.name.localeCompare(a.name));
+                break;
 
-        const timer = setTimeout(() => {
-            setToast("");
-        }, 2000);
+            default:
+                break;
+        }
 
-        return () => clearTimeout(timer);
-    }, [toast]);
+        return sorted;
+    }, [search, sortBy]);
 
     return (
         <div>
