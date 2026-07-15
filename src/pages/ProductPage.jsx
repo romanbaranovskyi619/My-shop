@@ -2,12 +2,21 @@ import { Link, useParams } from "react-router-dom";
 import products from "../data/products";
 import "./ProductPage.css";
 import { addToCart } from "../utils/cart";
+import NotFoundPage from "./NotFoundPage";
 
 function ProductPage({ setCart, setToast }) {
     const { id } = useParams();
     const product = products.find(
         (item) => item.id === Number(id)
     );
+    if (!product) {
+        return (
+            <NotFoundPage
+                title="Product Not Found"
+                message="The requested product doesn't exist."
+            />
+        );
+    }
     function handleAddToCart() {
         addToCart(product, setCart, setToast);
     }
